@@ -35,6 +35,8 @@ def draw_snow():
     arcade.draw_ellipse_filled(100, 700, 700, 200, arcade.csscolor.WHITE)
     arcade.draw_ellipse_filled(600, 700, 700, 200, arcade.csscolor.WHITE)
     arcade.draw_ellipse_filled(900, 700, 400, 200, arcade.csscolor.WHITE)
+
+
 def draw_tree(x,y):
     """Draw a tree"""
 
@@ -45,6 +47,7 @@ def draw_tree(x,y):
     arcade.draw_triangle_filled(x - 10, y + 40, x + 15, y + 70, x + 40, y + 40, arcade.csscolor.GREEN)
     arcade.draw_triangle_filled(x - 10, y + 65, x + 15, y + 95, x + 40, y + 65, arcade.csscolor.GREEN)
     arcade.draw_triangle_filled(x - 10, y + 90, x + 15, y + 120, x + 40, y + 90, arcade.csscolor.GREEN)
+
 
 def draw_bear(x,y):
     """Draw a bear"""
