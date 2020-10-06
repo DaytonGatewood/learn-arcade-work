@@ -27,10 +27,10 @@ def main():
     current_room = 0
     done = False
 
-    while done = False:
+    while not done:
         print()
         print(room_list[current_room].description)
-        user_choice = input("Which direction?")
+        user_choice = input("Which direction? ")
 
     if user_choice.lower() == "n" or user_choice.upper()== "North":
         next_room = room_list[current_room].north
@@ -39,17 +39,17 @@ def main():
         else:
             current_room = next_room
 
-    elif user_choice.lower() == "e" or user_choice.upper() == "East"
+    elif user_choice.lower() == "e" or user_choice.upper() == "East":
         next_room = room_list[current_room].east
         if next_room == None:
             print("You can't go that way.")
 
-    elif user_choice.lower() == "s" or user_choice.upper() == "South"
+    elif user_choice.lower() == "s" or user_choice.upper() == "South":
         next_room = room_list[current_room].south
         if next_room == None:
             print("You can't go that way.")
 
-    elif user_choice.lower() == "w" or user_choice.upper() == "West"
+    elif user_choice.lower() == "w" or user_choice.upper() == "West":
         next_room = room_list[current_room].west
         if next_room == None:
             print("You can't go that way.")
