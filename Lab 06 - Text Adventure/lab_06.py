@@ -9,7 +9,9 @@ class Room:
         self.south = south
         self.west = west
 
+
 def main():
+    #This creates the rooms
     room_list = []
     room = Room("You are in the living room. There is a couch and an unplugged tv playing a horror movie.\nThere is a door to the east.", None, 1, None, None)
     room_list.append(room)
@@ -27,6 +29,7 @@ def main():
     current_room = 0
     done = False
     print( "You are in a haunted castle.")
+
     while not done:
         print()
         print(room_list[current_room].description)
@@ -59,7 +62,11 @@ def main():
                 print("You can't go that way.")
             else:
                 current_room = next_room
+
+        elif user_choice.lower() == "quit":
+                done = True
         else:
             print("I don't understand that command.")
+
 
 main()
