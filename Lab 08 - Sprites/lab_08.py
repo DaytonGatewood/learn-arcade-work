@@ -1,5 +1,3 @@
-""" Sprite Sample Program """
-
 import random
 import arcade
 
@@ -8,7 +6,7 @@ SPRITE_SCALING_PLAYER = 0.7
 SPRITE_SCALING_BANANA = 0.2
 BANANA_COUNT = 80
 SPRITE_SCALING_SNAKE = 0.4
-SNAKE_COUNT = 30
+SNAKE_COUNT = 25
 
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 800
@@ -45,12 +43,12 @@ class Snake(arcade.Sprite):
     def __init__(self, filename, sprite_scaling):
         super().__init__(filename, sprite_scaling)
 
-        def update(self):
-            self.center_y -= 1
+    def update(self):
+        self.center_y -= 1
 
-            if self.top < 0:
-                self.center_y = random.randrange(SCREEN_HEIGHT + 20, SCREEN_HEIGHT + 40)
-                self.center_x = random.randrange(SCREEN_WIDTH)
+        if self.top < 0:
+            self.center_y = random.randrange(SCREEN_HEIGHT + 20, SCREEN_HEIGHT + 40)
+            self.center_x = random.randrange(SCREEN_WIDTH)
 
 
 class MyGame(arcade.Window):
@@ -127,35 +125,36 @@ class MyGame(arcade.Window):
         output = f"Score: {self.score}"
         arcade.draw_text(output, 10, 20, arcade.color.WHITE, 36)
 
+        if len(self.banana_list) == 0:
+            output = f"Game over."
+            arcade.draw_text(output, 300, 400, arcade.color.WHITE, 60)
+
     def on_mouse_motion(self, x, y, dx, dy):
         """"Handle Mouse Motion"""
-
-        self.player_sprite.center_x = x
-        self.player_sprite.center_y = y
+        if len(self.banana_list) > 0:
+            self.player_sprite.center_x = x
+            self.player_sprite.center_y = y
 
     def update(self, delta_time):
         """Movement and game logic"""
         self.banana_list.update()
 
         bananas_hit_list = arcade.check_for_collision_with_list(self.player_sprite, self.banana_list)
-
-        for banana in bananas_hit_list:
-            banana.remove_from_sprite_lists()
-            self.score += 1
-            arcade.play_sound(self.good_sound)
-
-        self.snake_list.update()
-
         snake_hit_list = arcade.check_for_collision_with_list(self.player_sprite, self.snake_list)
 
-        for snake in snake_hit_list:
-            snake.remove_from_sprite_lists()
-            self.score -= 1
-            arcade.play_sound(self.bad_sound)
+        if len(self.banana_list) > 0:
+            for banana in bananas_hit_list:
+                banana.remove_from_sprite_lists()
+                self.score += 1
+                arcade.play_sound(self.good_sound)
 
-        if len(self.banana_list) == 0:
-            output = f"Game over."
-            arcade.draw_text(output, 500, 500, arcade.color.WHITE, 40)
+            self.snake_list.update()
+
+            for snake in snake_hit_list:
+                snake.remove_from_sprite_lists()
+                self.score -= 1
+                arcade.play_sound(self.bad_sound)
+
 
 def main():
     """ Main method """
