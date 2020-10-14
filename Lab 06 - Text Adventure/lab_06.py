@@ -11,33 +11,33 @@ class Room:
 
 
 def main():
-    #This creates the rooms
+    # This creates the rooms
     room_list = []
     room = Room("You are in the living room. There is a couch and an unplugged tv playing a horror movie.\nThere is a door to the east.", None, 1, None, None)
     room_list.append(room)
-    room = Room("You are in the hallway.\nThere is a floating lamp and a key.", 2, 4, 3, 0)
+    room = Room("You are in the hallway.\nThere is a floating lamp and a key. \nThere are doors to the north, east, and south.", 2, 4, 3, 0)
     room_list.append(room)
-    room = Room("You are in the library.\nThere is a scary book and a chair.", None, 5, 1, None)
+    room = Room("You are in the library.\nThere is a scary book and a chair.\nThere are doors to the east and south.", None, 5, 1, None)
     room_list.append(room)
-    room = Room("You are in the bedroom.\nThere is a closet full of skeletons and a coffin.", 1, None, None, None)
+    room = Room("You are in the bedroom.\nThere is a closet full of skeletons and a coffin.\nThere is a door to the north.", 1, None, None, None)
     room_list.append(room)
-    room = Room("You are in the kitchen.\nThere is a fridge and butcher knives.", None, None, 4, 2)
+    room = Room("You are in the kitchen.\nThere is a fridge and butcher knives.\nThere are doors to the south and west.", None, None, 4, 2)
     room_list.append(room)
-    room = Room("You are in the dining room.\nThere is a banana and spiderwebs.", 5, None, None, 1)
+    room = Room("You are in the dining room.\nThere is a banana and spiderwebs.\nThere is a door to the west.", None, None, None, 1)
     room_list.append(room)
 
     current_room = 0
     done = False
-    print( "You are in a haunted castle.")
+    print("You are in a haunted castle.")
 
     while not done:
         print()
         print(room_list[current_room].description)
         user_choice = input("Which direction? ")
 
-        if user_choice.lower() == "n" or user_choice.lower()== "north":
+        if user_choice.lower() == "n" or user_choice.lower() == "north":
             next_room = room_list[current_room].north
-            if next_room is None:
+            if next_room == None:
                 print("You can't go that way.")
             else:
                 current_room = next_room
@@ -64,7 +64,7 @@ def main():
                 current_room = next_room
 
         elif user_choice.lower() == "quit":
-                done = True
+            done = True
         else:
             print("I don't understand that command.")
 
