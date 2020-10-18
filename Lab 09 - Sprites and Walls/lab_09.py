@@ -14,7 +14,7 @@ VIEWPORT_MARGIN = 50
 
 MOVEMENT_SPEED = 5
 
-NUMBER_OF_WORMS = 50
+NUMBER_OF_WORMS = 100
 
 
 class MyGame(arcade.Window):
@@ -33,14 +33,17 @@ class MyGame(arcade.Window):
         self.player_list = None
 
         self.worm_list = None
+        self.score = 0
 
         self.player_sprite = None
         self.wall_list = None
         self.physics_engine = None
+        self.worm_sound = arcade.load_sound("sd_0.wav")
 
         # Used in scrolling
         self.view_bottom = 0
         self.view_left = 0
+        self.set_mouse_visible(False)
 
     def setup(self):
         """ Set up the game and initialize the variables. """
@@ -72,13 +75,19 @@ class MyGame(arcade.Window):
             wall.center_y = 250
             self.wall_list.append(wall)
 
-        for y in range(250, 460, 75):
+        for y in range(250, 1260, 75):
             wall = arcade.Sprite("fence.png", .3)
             wall.center_x = 980
             wall.center_y = y
             self.wall_list.append(wall)
     # Square piece
-        for y in range(460, 700, 75):
+        for y in range(460, 530, 75):
+            wall = arcade.Sprite("fence.png", .3)
+            wall.center_x = 100
+            wall.center_y = y
+            self.wall_list.append(wall)
+
+        for y in range(600, 750, 75):
             wall = arcade.Sprite("fence.png", .3)
             wall.center_x = 100
             wall.center_y = y
@@ -96,7 +105,7 @@ class MyGame(arcade.Window):
             wall.center_y = y
             self.wall_list.append(wall)
 
-        for x in range(-1500, 670, 80):
+        for x in range(-1500, 1000, 80):
             wall = arcade.Sprite("fence.png", .3)
             wall.center_x = x
             wall.center_y = 1265
@@ -120,7 +129,7 @@ class MyGame(arcade.Window):
             wall.center_x = x
             wall.center_y = 700
             self.wall_list.append(wall)
-
+        # Dogs
         wall = arcade.Sprite("dog.png", .3)
         wall.center_x = -300
         wall.center_y = 700
@@ -144,15 +153,15 @@ class MyGame(arcade.Window):
         for i in range(NUMBER_OF_WORMS):
 
             # worm image from shareicon.net
-            worm = arcade.Sprite("worm.png", 1)
+            worm = arcade.Sprite("worm.png", .2)
 
             # --- IMPORTANT PART ---
 
             worm_placed_successfully = False
 
             while not worm_placed_successfully:
-                worm.center_x = random.randrange(-1500, 1000)
-                worm.center_y = random.randrange(0, 1200)
+                worm.center_x = random.randrange(-1400, 1100)
+                worm.center_y = random.randrange(350, 1000)
 
                 wall_hit_list = arcade.check_for_collision_with_list(worm, self.wall_list)
 
@@ -188,6 +197,13 @@ class MyGame(arcade.Window):
         self.player_list.draw()
         self.worm_list.draw()
 
+        output = f"Score: {self.score}"
+        arcade.draw_text(output, -500, 500, arcade.color.WHITE, 36)
+
+        if len(self.worm_list) == 0:
+            output = f"Game over."
+            arcade.draw_text(output, 500, 400, arcade.color.WHITE, 60)
+
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
 
@@ -210,10 +226,15 @@ class MyGame(arcade.Window):
 
     def on_update(self, delta_time):
         """ Movement and game logic """
+        worm_hit_list = arcade.check_for_collision_with_list(self.player_sprite, self.worm_list)
 
-        # Call update on all sprites (The sprites don't do much in this
-        # example though.)
         self.physics_engine.update()
+
+        if len(self.worm_list) > 0:
+            for worm in worm_hit_list:
+                worm.remove_from_sprite_lists()
+                self.score += 1
+                arcade.play_sound(self.worm_sound)
 
         # --- Manage Scrolling ---
 
