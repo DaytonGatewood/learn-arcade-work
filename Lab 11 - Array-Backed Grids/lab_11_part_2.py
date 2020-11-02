@@ -95,7 +95,13 @@ class MyGame(arcade.Window):
 
         self.create_shapes_from_grid()
 
+        total_cells_list = []
 
+        for cell in total_cells_list:
+            cell = self.grid[row][column]
+            if cell == 1:
+                total_cells_list.append(cell)
+                print("Total of", total_cells_list, "cells selected.")
 
 
 def main():
