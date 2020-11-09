@@ -117,7 +117,7 @@ class MyGame(arcade.Window):
                     total_continuous_count = 0
 
             if total_continuous_count > 2:
-                print("Total of", total_continuous_list, "continuous blocks selected in row", row)
+                print("Total of", total_continuous_count, "continuous blocks selected in row", row)
 
             print("There are", total_cells_in_row_list, "cells selected in row", row)
             total_cells_in_row_list = 0
