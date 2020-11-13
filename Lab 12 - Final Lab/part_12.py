@@ -53,7 +53,7 @@ def main():
     room_list.append(room)
 
     room = Room("You are in the basement.\nThere is a scary beast in here.\nThere is a staircase to go up.", None, None,
-                None, None, 5, None, None, None, None, None)
+                None, None, 2, None, None, None, None, None)
     room_list.append(room)
 
     room = Room("You are in the attic.\nThere is a ladder under you.", None, None, None, None, None, 3, None, None, None,
