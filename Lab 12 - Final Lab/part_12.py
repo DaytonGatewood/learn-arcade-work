@@ -36,8 +36,8 @@ def main():
                 None, None, None, None)
     room_list.append(room)
 
-    room = Room("You are in the library.\nThere are doors to the east and south.", None, 5, 1, None, 6, None, None,
-                None, None, None)
+    room = Room("You are in the library.\nThere are doors to the east and south. There is a staircase to go to the "
+                "basement.", None, 5, 1, None, None, 6, None, None, None, None)
     room_list.append(room)
 
     room = Room("You are in the bedroom.\nThere is a door to the north.\nThere's a ladder to go up.", 1, None, None,
@@ -65,7 +65,7 @@ def main():
     room_list.append(room)
 
     room = Room("You are in the exit room.\nThere is a door to the southeast.", None, None, None, None, None, None,
-                None, 0, None, None)
+                None, None, 0, None)
     room_list.append(room)
 
     # This creates the items
