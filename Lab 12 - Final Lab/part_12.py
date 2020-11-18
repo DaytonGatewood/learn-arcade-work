@@ -119,77 +119,91 @@ def main():
         user_choice = input("What is your command? ")
         command_words = user_choice.split(" ")
 
-        if command_words[0] == "n" or command_words[0] == "north":
+        if command_words[0].lower() == "n" or command_words[0].lower() == "north":
             next_room = room_list[current_room].north
             if next_room == None:
                 print("You can't go that way.")
             else:
                 current_room = next_room
 
-        elif user_choice.lower() == "e" or user_choice.lower() == "east":
+        elif command_words[0].lower() == "e" or command_words[0].lower() == "east":
             next_room = room_list[current_room].east
             if next_room == None:
                 print("You can't go that way.")
             else:
                 current_room = next_room
 
-        elif user_choice.lower() == "s" or user_choice.lower() == "south":
+        elif command_words[0].lower() == "s" or command_words[0].lower() == "south":
             next_room = room_list[current_room].south
             if next_room == None:
                 print("You can't go that way.")
             else:
                 current_room = next_room
 
-        elif user_choice.lower() == "w" or user_choice.lower() == "west":
+        elif command_words[0].lower() == "w" or command_words[0].lower() == "west":
             next_room = room_list[current_room].west
             if next_room == None:
                 print("You can't go that way.")
             else:
                 current_room = next_room
 
-        elif user_choice.lower() == "u" or user_choice.lower() == "up":
+        elif command_words[0].lower() == "u" or command_words[0].lower() == "up":
             next_room = room_list[current_room].up
             if next_room == None:
                 print("You can't go that way.")
             else:
                 current_room = next_room
 
-        elif user_choice.lower() == "d" or user_choice.lower() == "down":
+        elif command_words[0].lower() == "d" or command_words[0].lower() == "down":
             next_room = room_list[current_room].down
             if next_room == None:
                 print("You can't go that way.")
             else:
                 current_room = next_room
 
-        elif user_choice.lower() == "ne" or user_choice.lower() == "northeast":
+        elif command_words[0].lower() == "ne" or command_words[0].lower() == "northeast":
             next_room = room_list[current_room].northeast
             if next_room == None:
                 print("You can't go that way.")
             else:
                 current_room = next_room
 
-        elif user_choice.lower() == "nw" or user_choice.lower() == "northwest":
+        elif command_words[0].lower() == "nw" or command_words[0].lower() == "northwest":
             next_room = room_list[current_room].northwest
             if next_room == None:
                 print("You can't go that way.")
             else:
                 current_room = next_room
 
-        elif user_choice.lower() == "se" or user_choice.lower() == "southeast":
+        elif command_words[0].lower() == "se" or command_words[0].lower() == "southeast":
             next_room = room_list[current_room].southeast
             if next_room == None:
                 print("You can't go that way.")
             else:
                 current_room = next_room
 
-        elif user_choice.lower() == "sw" or user_choice.lower() == "southwest":
+        elif command_words[0].lower() == "sw" or command_words[0].lower() == "southwest":
             next_room = room_list[current_room].southwest
             if next_room == None:
                 print("You can't go that way.")
             else:
                 current_room = next_room
 
-        elif user_choice.lower() == "quit":
+        elif command_words[0].lower() == "get":
+            for item in item_list:
+                if input("") == item.short_name:
+
+                elif input("") == item.short_name and item.room_number == current_room:
+                    item.room_number = -1
+
+                elif input("") != item.short_name or item.room_number != current_room:
+                    print("The object wasn't found.")
+
+        elif command_words[0].lower() == "drop":
+            item.room_number = current_room
+
+
+        elif command_words[0].lower() == "quit":
             done = True
         else:
             print("I don't understand that command.")
