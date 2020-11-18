@@ -116,9 +116,10 @@ def main():
             if item.room_number == current_room:
                 print(item.long_description)
                 print()
-        user_choice = input("Which direction? ")
+        user_choice = input("What is your command? ")
+        command_words = user_choice.split(" ")
 
-        if user_choice.lower() == "n" or user_choice.lower() == "north":
+        if command_words[0] == "n" or command_words[0] == "north":
             next_room = room_list[current_room].north
             if next_room == None:
                 print("You can't go that way.")
