@@ -71,8 +71,8 @@ def main():
     # This creates the items
     item_list = []
 
-    tv = Item(0, "The tv is off but you can click the button to turn it on.", "button")
-    item_list.append(tv)
+    button = Item(0, "The tv is off but you can click the button to turn it on.", "button")
+    item_list.append(button)
 
     lock = Item(9, "There's the door to escape. It can be unlocked with a key.", "lock")
     item_list.append(lock)
@@ -189,19 +189,44 @@ def main():
             else:
                 current_room = next_room
 
-        elif command_words[0].lower() == "get":
+        elif command_words[0].lower() == "grab":
+            success = False
+            target_item = command_words[1].lower()
             for item in item_list:
-                if input("") == item.short_name:
-
-                elif input("") == item.short_name and item.room_number == current_room:
+                if target_item == item.short_name and item.room_number == current_room:
                     item.room_number = -1
+                    print(f"You picked up the {target_item}.")
+                    success = True
+            if not success:
+                print(f"The {target_item} wasn't found.")
 
-                elif input("") != item.short_name or item.room_number != current_room:
-                    print("The object wasn't found.")
+        elif command_words[0].lower() == "inventory":
+            if item.room_number == -1:
+                print(f"You have picked up {item_list}.")
+            else:
+                print("There is nothing in your inventory.")
 
         elif command_words[0].lower() == "drop":
-            item.room_number = current_room
+            success = False
+            target_item = command_words[1].lower()
+            for item in item_list:
+                if target_item == item.short_name and item.room_number == -1:
+                    item.room_number = current_room
+                    print(f"You dropped the {target_item}.")
+                    success = True
+                else:
+                    print("You didn't drop it.")
 
+        elif command_words[0].lower() == "push":
+            success = False
+            target_item = command_words[1].lower()
+            for item in item_list:
+                if target_item == item.short_name and item.short_name == "button" and item.room_number == current_room:
+                    item.room_number = -1
+                    print(f"You pushed the {target_item}.\nThe tv turned on and the numbers 3675 are on the screen.")
+                    success = True
+                else:
+                    print("You can't push that.")
 
         elif command_words[0].lower() == "quit":
             done = True
