@@ -98,12 +98,11 @@ def main():
     bone = Item(7, "There is a bone on the ground.", "bone")
     item_list.append(bone)
 
-    code = Item(6, "There is a key pad on the wall behind the beast.\nInsert the code to unlock a door.", "code")
+    code = Item(6, "There is a key pad on the wall behind the beast.\nEnter the code to unlock a door.", "code")
     item_list.append(code)
 
     cake = Item(8, "There is a cake on the table.", "cake")
     item_list.append(cake)
-
 
     current_room = 0
     done = False
@@ -194,16 +193,20 @@ def main():
             target_item = command_words[1].lower()
             for item in item_list:
                 if target_item == item.short_name and item.room_number == current_room:
-                    item.room_number = -1
-                    print(f"You picked up the {target_item}.")
-                    success = True
+                    if item.short_name == "bone" or item.short_name == "cheese" or item.short_name == "sword" or item.short_name == "cake":
+                        item.room_number = -1
+                        print(f"You picked up the {target_item}.")
+                        success = True
             if not success:
                 print(f"The {target_item} wasn't found.")
 
         elif command_words[0].lower() == "inventory":
-            if item.room_number == -1:
-                print(f"You have picked up {item_list}.")
-            else:
+            empty = True
+            for item in item_list:
+                if item.room_number == -1:
+                    empty = False
+                    print(f"You have picked up {item_list}.")
+            if empty:
                 print("There is nothing in your inventory.")
 
         elif command_words[0].lower() == "drop":
@@ -225,8 +228,42 @@ def main():
                     item.room_number = -1
                     print(f"You pushed the {target_item}.\nThe tv turned on and the numbers 3675 are on the screen.")
                     success = True
-                else:
-                    print("You can't push that.")
+            if not success:
+                print("You can't push that.")
+
+        elif command_words[0].lower() == "pull":
+            success = False
+            target_item = command_words[1].lower()
+            for item in item_list:
+                if target_item == item.short_name and item.short_name == "chain" and item.room_number == current_room:
+                    item.room_number = -1
+                    print(f"You pulled the {target_item}.")
+                    success = True
+            if not success:
+                print("You can't pull that.")
+
+        elif command_words[0].lower() == "enter":
+            success = False
+            target_item = command_words[1].lower()
+            for item in item_list:
+                if target_item == item.short_name and item.short_name == "code" and item.room_number == current_room:
+                    item.room_number = -1
+                    print(f"Please enter the {target_item}.")
+                    success = True
+            if not success:
+                print("You can't enter that.")
+
+        elif command_words[0].lower() == "3675":
+            success = False
+            target_item = command_words[1].lower()
+            for item in item_list:
+                if target_item == item.short_name and item.short_name == "enter" and item.room_number == current_room:
+                    item.room_number = -1
+                    print(f"You have entered the correct code.")
+                    success = True
+            if not success:
+                print("Wrong code. Try Again.")
+
 
         elif command_words[0].lower() == "quit":
             done = True
