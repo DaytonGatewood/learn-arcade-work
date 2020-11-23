@@ -264,6 +264,18 @@ def main():
             if not success:
                 print("Wrong code. Try Again.")
 
+        elif command_words[0].lower() == "feed":
+            success = False
+            target_item = command_words[1].lower()
+            for item in item_list:
+                if target_item == item.short_name and item.room_number == current_room:
+                    if item.short_name == "cheese" or item.short_name == "cake" or item.short_name == "bone":
+                        item.room_number = -1
+                        print(f"You pulled the {target_item}.")
+                        success = True
+            if not success:
+                print("You can't pull that.")
+
 
         elif command_words[0].lower() == "quit":
             done = True
