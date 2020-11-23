@@ -187,24 +187,25 @@ def main():
 
         elif command_words[0].lower() == "grab":
             grabbed = False
-            target_item = command_words[1].lower()
-            inventory_list = []
-            for item in item_list:
-                if target_item == item.short_name and item.room_number == current_room:
-                    if item.short_name == "bone" or item.short_name == "cheese" or item.short_name == "sword" or item.short_name == "cake":
-                        item.room_number = -1
-                        inventory_list.append(target_item)
-                        print(f"You picked up the {target_item}.")
-                        grabbed = True
-            if not grabbed:
-                print(f"The {target_item} was not found.")
+            if len(command_words) <2:
+                print("What do you want to grab?")
+            else:
+                target_item = command_words[1].lower()
+                for item in item_list:
+                    if target_item == item.short_name and item.room_number == current_room:
+                        if item.short_name == "bone" or item.short_name == "cheese" or item.short_name == "sword" or item.short_name == "cake":
+                            item.room_number = -1
+                            print(f"You picked up the {target_item}.")
+                            grabbed = True
+                if not grabbed:
+                    print(f"The {target_item} was not found.")
 
         elif command_words[0].lower() == "inventory" or command_words[0].lower() == "i":
             empty = True
             for item in item_list:
                 if item.room_number == -1:
                     empty = False
-                    print(f"You have picked up {inventory_list}.")
+                    print(f"You have picked up {item.short_name}.")
             if empty:
                 print("There is nothing in your inventory.")
 
@@ -214,20 +215,17 @@ def main():
             for item in item_list:
                 if target_item == item.short_name and item.room_number == -1:
                     item.room_number = current_room
-                    inventory_list.remove(target_item)
                     print(f"You dropped the {target_item}.")
                     dropped = True
-                if not dropped:
-                    print("You didn't drop it.")
+            if not dropped:
+                print("You didn't drop it.")
 
         elif command_words[0].lower() == "push":
             pushed = False
             target_item = command_words[1].lower()
-            for item in item_list:
-                if target_item == item.short_name and item.short_name == "button" and item.room_number == current_room:
-                    item.room_number = -1
-                    print(f"You pushed the {target_item}.\nThe tv turned on and the numbers 3675 are on the screen.")
-                    pushed = True
+            if target_item == "button" and current_room == 0:
+                pushed = True
+                print(f"You pushed the button.\nThe tv turned on and the numbers 3675 are on the screen.")
             if not pushed:
                 print("You can't push that.")
 
