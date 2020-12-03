@@ -1,3 +1,5 @@
+import final_functions
+
 class Room:
     """
     This is a class to describe a room.
@@ -17,7 +19,7 @@ class Room:
 
 
 class Item:
-    #This is a class to describe an item.
+    # This is a class to describe an item.
     def __init__(self, room_number, long_description, short_name):
         self.room_number = room_number
         self.long_description = long_description
@@ -25,6 +27,7 @@ class Item:
 
 
 def main():
+    final_functions.my_rooms()
     # This creates the rooms
     room_list = []
 
@@ -232,46 +235,47 @@ def main():
         elif command_words[0].lower() == "pull":
             pulled = False
             target_item = command_words[1].lower()
-            for item in item_list:
-                if target_item == item.short_name and item.short_name == "chain" and item.room_number == current_room:
-                    item.room_number = -1
-                    print(f"You pulled the {target_item}.")
-                    pulled = True
+            if target_item == "Chain" and current_room == 2:
+                pulled = True
+                print(f"You pulled the Chain.")
             if not pulled:
                 print("You can't pull that.")
 
         elif command_words[0].lower() == "enter":
             entered = False
             target_item = command_words[1].lower()
-            for item in item_list:
-                if target_item == item.short_name and item.short_name == "3675" and item.room_number == current_room:
-                    item.room_number = -1
-                    print(f"You have entered the correct code.")
-                    entered = True
+            if target_item == "code" and current_room == 6:
+                entered = True
+                print(f"You have entered the correct code.")
             if not entered:
                 print("Wrong code. Try again.")
 
         elif command_words[0].lower() == "feed":
             fed = False
             target_item = command_words[1].lower()
-            for item in item_list:
-                if target_item == item.short_name and item.room_number == current_room:
-                    if item.short_name == "cheese" or item.short_name == "cake" or item.short_name == "bone":
-                        item.room_number = -1
-                        print(f"You fed the beast.\nHe will not bother you anymore.\nThe code can now be entered.")
-                        fed = True
+            if target_item == "cheese" or target_item == "cake" or target_item == "bone" and current_room == 6:
+                print(f"You fed the beast.\nHe will not bother you anymore.\nThe code can now be entered.")
+                fed = True
             if not fed:
-                print("You can't feed that. The beast is still in your way.")
+                print("You can't feed that to the beast.\nThe beast is still in your way.")
 
         elif command_words[0].lower() == "open":
             opened = False
             target_item = command_words[1].lower()
-            for item in item_list:
-                if target_item == item.short_name and item.short_name == "door" and item.room_number == current_room:
-                    if code == item.room_number[-1]:
-                        print(f"You have successfully left the mansion.")
-                        opened = True
-                        done = True
+            if target_item == "door" and current_room == 9 and entered == True:
+                    print(f"You have successfully left the mansion.")
+                    opened = True
+                    done = True
+            if not opened:
+                print("You cannot leave yet.")
+        elif command_words[0].lower() == "swing":
+            opened = False
+            target_item = command_words[1].lower()
+            if target_item == item.short_name and item.short_name == "door" and item.room_number == current_room:
+                if code == item.room_number[-1]:
+                    print(f"You have successfully left the mansion.")
+                    opened = True
+                    done = True
             if not opened:
                 print("You cannot leave yet.")
 
