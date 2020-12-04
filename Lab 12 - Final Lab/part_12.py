@@ -77,14 +77,8 @@ def main():
     lamp = Item(1, "There is a lamp with a chain to turn it on.", "chain")
     item_list.append(lamp)
 
-    lever = Item(2, "There is a secret lever on the wall.", "lever")
-    item_list.append(lever)
-
     cheese = Item(4, "There is a fridge.", "fridge")
     item_list.append(cheese)
-
-    switch = Item(3, "There is a switch on the floor.", "switch")
-    item_list.append(switch)
 
     sword = Item(5, "There is a sword laying on the ground.", "sword")
     item_list.append(sword)
@@ -102,7 +96,7 @@ def main():
     item_list.append(door)
 
     beast_lives = 3
-    alive = False
+    dead = False
     current_room = 0
     done = False
     print("You are in a haunted castle. Find your way out or be stuck forever!")
@@ -250,41 +244,18 @@ def main():
                 if not pulled:
                     print("You can't pull that.")
 
-        elif command_words[0].lower() == "enter":
-            entered = False
-            if len(command_words) < 2:
-                print("What do you want to enter?")
-            else:
-                target_item = command_words[1].lower()
-                if target_item == "code" and current_room == 6 and alive == True:
-                    entered = True
-                    print(f"You have entered the correct code.")
-                if not entered:
-                    print("Wrong code or the beast is still alive. Try again.")
-
         elif command_words[0].lower() == "feed":
             fed = False
             if len(command_words) < 2:
                 print("What do you want to feed?")
             else:
                 target_item = command_words[1].lower()
-                if target_item == "cheese" or target_item == "cake" or target_item == "bone" and current_room == 6:
-                    print(f"You fed the beast.\nHe will not bother you anymore.\nThe code can now be entered.")
-                    fed = True
+                if current_room == 6:
+                    if target_item == "cheese" or target_item == "cake" or target_item == "bone":
+                        print(f"You fed the beast.\nHe will not bother you anymore.\nThe code can now be entered.")
+                        fed = True
                 if not fed:
                     print("You can't feed that to the beast.\nThe beast is still in your way.")
-
-        elif command_words[0].lower() == "open":
-            opened = False
-            if len(command_words) < 2:
-                print("What do you want to open?")
-            else:
-                target_item = command_words[1].lower()
-                if target_item == "door" and current_room == 9 and entered == True:
-                    print(f"You have successfully left the mansion.\nYou win!")
-                    opened = True
-                if not opened:
-                    print("You cannot leave yet.")
 
         elif command_words[0].lower() == "swing":
             swung = False
@@ -296,20 +267,42 @@ def main():
                     beast_lives = beast_lives - 1
                     print(f"You have swung at the beast.\nThe beast has", beast_lives, " lives left.")
                     swung = True
+                elif beast_lives == 0:
+                    dead = True
+                    print("You have slayed killed the beast. You can enter the code now.")
                 if not swung:
                     print("You cannot swing that.")
 
-        elif beast_lives == 0:
-            alive = True
-            print("You have slayed killed the beast. You can enter the code now.")
+        elif command_words[0].lower() == "enter":
+            entered = False
+            if len(command_words) < 2:
+                print("What do you want to enter?")
+            else:
+                target_item = command_words[1].lower()
+                if target_item == "3675" and current_room == 6:
+                    if dead == True or fed == True:
+                        entered = True
+                        print(f"You have entered the correct code.")
+                if not entered:
+                    print("Wrong code or the beast is still alive. Try again.")
 
-
-
+        elif command_words[0].lower() == "open":
+            opened = False
+            if len(command_words) < 2:
+                print("What do you want to open?")
+            else:
+                target_item = command_words[1].lower()
+                if target_item == "door" and current_room == 9:
+                    if entered == True:
+                        print(f"You have successfully left the mansion.\nYou win!")
+                        opened = True
+                        done = True
+                if not opened:
+                    print("You cannot leave yet.")
 
         elif command_words[0].lower() == "quit":
             done = True
         else:
             print("I don't understand that command. Try something else.")
-
 
 main()
