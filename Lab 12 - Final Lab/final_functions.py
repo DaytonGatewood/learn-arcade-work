@@ -24,8 +24,9 @@ class Item:
         self.short_name = short_name
 
 
-def my_rooms():
+def my_functions():
     room_list = []
+
 
     room = Room("You are in the living room.\nThere are doors to the east and northwest.", None, 1, None, None, None,
                 None, None, 9, None, None)
@@ -66,3 +67,35 @@ def my_rooms():
     room = Room("You are in the exit room.\nThere is a door to the southeast.", None, None, None, None, None, None,
                 None, None, 0, None)
     room_list.append(room)
+
+    item_list = []
+
+    button = Item(0, "The tv is off but you can click the button to turn it on.", "button")
+    item_list.append(button)
+
+    lamp = Item(1, "There is a lamp with a chain to turn it on.", "chain")
+    item_list.append(lamp)
+
+    lever = Item(2, "There is a secret lever on the wall.", "lever")
+    item_list.append(lever)
+
+    cheese = Item(4, "There is a fridge.", "fridge")
+    item_list.append(cheese)
+
+    switch = Item(3, "There is a switch on the floor.", "switch")
+    item_list.append(switch)
+
+    sword = Item(5, "There is a sword laying on the ground.", "sword")
+    item_list.append(sword)
+
+    bone = Item(7, "There is a bone on the ground.", "bone")
+    item_list.append(bone)
+
+    code = Item(6, "There is a key pad on the wall behind the beast.\nEnter the code to unlock a door.", "3675")
+    item_list.append(code)
+
+    cake = Item(8, "There is a cake on the table.", "cake")
+    item_list.append(cake)
+
+    door = Item(9, "The exit door is in here.\nYou'll have to unlock it to leave.", "door")
+    item_list.append(door)

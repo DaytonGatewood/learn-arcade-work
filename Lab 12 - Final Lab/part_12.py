@@ -1,5 +1,3 @@
-import final_functions
-
 class Room:
     """
     This is a class to describe a room.
@@ -27,7 +25,6 @@ class Item:
 
 
 def main():
-    final_functions.my_rooms()
     # This creates the rooms
     room_list = []
 
@@ -104,6 +101,8 @@ def main():
     door = Item(9, "The exit door is in here.\nYou'll have to unlock it to leave.", "door")
     item_list.append(door)
 
+    beast_lives = 3
+    alive = False
     current_room = 0
     done = False
     print("You are in a haunted castle. Find your way out or be stuck forever!")
@@ -190,13 +189,14 @@ def main():
 
         elif command_words[0].lower() == "grab":
             grabbed = False
-            if len(command_words) <2:
+            if len(command_words) < 2:
                 print("What do you want to grab?")
             else:
                 target_item = command_words[1].lower()
                 for item in item_list:
                     if target_item == item.short_name and item.room_number == current_room:
-                        if item.short_name == "bone" or item.short_name == "cheese" or item.short_name == "sword" or item.short_name == "cake":
+                        if item.short_name == "bone" or item.short_name == "cheese" or item.short_name == "sword" or \
+                                item.short_name == "cake":
                             item.room_number = -1
                             print(f"You picked up the {target_item}.")
                             grabbed = True
@@ -214,70 +214,97 @@ def main():
 
         elif command_words[0].lower() == "drop":
             dropped = False
-            target_item = command_words[1].lower()
-            for item in item_list:
-                if target_item == item.short_name and item.room_number == -1:
-                    item.room_number = current_room
-                    print(f"You dropped the {target_item}.")
-                    dropped = True
-            if not dropped:
-                print("You didn't drop it.")
+            if len(command_words) < 2:
+                print("What do you want to drop?")
+            else:
+                target_item = command_words[1].lower()
+                for item in item_list:
+                    if target_item == item.short_name and item.room_number == -1:
+                        item.room_number = current_room
+                        print(f"You dropped the {target_item}.")
+                        dropped = True
+                if not dropped:
+                    print("You didn't drop it.")
 
         elif command_words[0].lower() == "push":
             pushed = False
-            target_item = command_words[1].lower()
-            if target_item == "button" and current_room == 0:
-                pushed = True
-                print(f"You pushed the button.\nThe tv turned on and the numbers 3675 are on the screen.")
-            if not pushed:
-                print("You can't push that.")
+            if len(command_words) < 2:
+                print("What do you want to push?")
+            else:
+                target_item = command_words[1].lower()
+                if target_item == "button" and current_room == 0:
+                    pushed = True
+                    print(f"You pushed the button.\nThe tv turned on and the numbers 3675 are on the screen.")
+                if not pushed:
+                    print("You can't push that.")
 
         elif command_words[0].lower() == "pull":
             pulled = False
-            target_item = command_words[1].lower()
-            if target_item == "Chain" and current_room == 2:
-                pulled = True
-                print(f"You pulled the Chain.")
-            if not pulled:
-                print("You can't pull that.")
+            if len(command_words) < 2:
+                print("What do you want to pull?")
+            else:
+                target_item = command_words[1].lower()
+                if target_item == "Chain" and current_room == 2:
+                    pulled = True
+                    print(f"You pulled the Chain.")
+                if not pulled:
+                    print("You can't pull that.")
 
         elif command_words[0].lower() == "enter":
             entered = False
-            target_item = command_words[1].lower()
-            if target_item == "code" and current_room == 6:
-                entered = True
-                print(f"You have entered the correct code.")
-            if not entered:
-                print("Wrong code. Try again.")
+            if len(command_words) < 2:
+                print("What do you want to enter?")
+            else:
+                target_item = command_words[1].lower()
+                if target_item == "code" and current_room == 6 and alive == True:
+                    entered = True
+                    print(f"You have entered the correct code.")
+                if not entered:
+                    print("Wrong code or the beast is still alive. Try again.")
 
         elif command_words[0].lower() == "feed":
             fed = False
-            target_item = command_words[1].lower()
-            if target_item == "cheese" or target_item == "cake" or target_item == "bone" and current_room == 6:
-                print(f"You fed the beast.\nHe will not bother you anymore.\nThe code can now be entered.")
-                fed = True
-            if not fed:
-                print("You can't feed that to the beast.\nThe beast is still in your way.")
+            if len(command_words) < 2:
+                print("What do you want to feed?")
+            else:
+                target_item = command_words[1].lower()
+                if target_item == "cheese" or target_item == "cake" or target_item == "bone" and current_room == 6:
+                    print(f"You fed the beast.\nHe will not bother you anymore.\nThe code can now be entered.")
+                    fed = True
+                if not fed:
+                    print("You can't feed that to the beast.\nThe beast is still in your way.")
 
         elif command_words[0].lower() == "open":
             opened = False
-            target_item = command_words[1].lower()
-            if target_item == "door" and current_room == 9 and entered == True:
-                    print(f"You have successfully left the mansion.")
+            if len(command_words) < 2:
+                print("What do you want to open?")
+            else:
+                target_item = command_words[1].lower()
+                if target_item == "door" and current_room == 9 and entered == True:
+                    print(f"You have successfully left the mansion.\nYou win!")
                     opened = True
-                    done = True
-            if not opened:
-                print("You cannot leave yet.")
+                if not opened:
+                    print("You cannot leave yet.")
+
         elif command_words[0].lower() == "swing":
-            opened = False
-            target_item = command_words[1].lower()
-            if target_item == item.short_name and item.short_name == "door" and item.room_number == current_room:
-                if code == item.room_number[-1]:
-                    print(f"You have successfully left the mansion.")
-                    opened = True
-                    done = True
-            if not opened:
-                print("You cannot leave yet.")
+            swung = False
+            if len(command_words) < 2:
+                print("What do you want to swing?")
+            else:
+                target_item = command_words[1].lower()
+                if target_item == "sword" and current_room == 6:
+                    beast_lives = beast_lives - 1
+                    print(f"You have swung at the beast.\nThe beast has", beast_lives, " lives left.")
+                    swung = True
+                if not swung:
+                    print("You cannot swing that.")
+
+        elif beast_lives == 0:
+            alive = True
+            print("You have slayed killed the beast. You can enter the code now.")
+
+
+
 
         elif command_words[0].lower() == "quit":
             done = True
