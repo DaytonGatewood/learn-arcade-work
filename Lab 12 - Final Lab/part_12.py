@@ -1,3 +1,8 @@
+"""
+Haunted Mansion
+"""
+
+
 class Room:
     """
     This is a class to describe a room.
@@ -56,8 +61,8 @@ def main():
                 None, None, 2, None, None, None, None, None)
     room_list.append(room)
 
-    room = Room("You are in the attic.\nThere is a ladder under you.", None, None, None, None, None, 3, None, None, None,
-                None)
+    room = Room("You are in the attic.\nThere is a ladder under you.", None, None, None, None, None, 3, None, None,
+                None, None)
     room_list.append(room)
 
     room = Room("You are in the party room.\nThere is a door southwest.", None, None, None, None, None, None, None,
@@ -80,7 +85,7 @@ def main():
     cheese = Item(4, "There is a fridge.", "fridge")
     item_list.append(cheese)
 
-    sword = Item(5, "There is a sword laying on the ground.", "sword")
+    sword = Item(5, "There is a sword laying on the ground.\nYou can swing it.", "sword")
     item_list.append(sword)
 
     bone = Item(7, "There is a bone on the ground.", "bone")
@@ -97,13 +102,17 @@ def main():
 
     beast_lives = 3
     dead = False
+    fed = False
     current_room = 0
     done = False
     print("You are in a haunted castle. Find your way out or be stuck forever!")
 
     while not done:
+        # Print room descriptions
         print()
         print(room_list[current_room].description)
+
+        # Print items in room
         for item in item_list:
             if item.room_number == current_room:
                 print(item.long_description)
@@ -113,21 +122,21 @@ def main():
 
         if command_words[0].lower() == "n" or command_words[0].lower() == "north":
             next_room = room_list[current_room].north
-            if next_room == None:
+            if next_room is None:
                 print("You can't go that way.")
             else:
                 current_room = next_room
 
         elif command_words[0].lower() == "e" or command_words[0].lower() == "east":
             next_room = room_list[current_room].east
-            if next_room == None:
+            if next_room is None:
                 print("You can't go that way.")
             else:
                 current_room = next_room
 
         elif command_words[0].lower() == "s" or command_words[0].lower() == "south":
             next_room = room_list[current_room].south
-            if next_room == None:
+            if next_room is None:
                 print("You can't go that way.")
             else:
                 current_room = next_room
@@ -267,9 +276,9 @@ def main():
                     beast_lives = beast_lives - 1
                     print(f"You have swung at the beast.\nThe beast has", beast_lives, " lives left.")
                     swung = True
-                elif beast_lives == 0:
+                if beast_lives == 0:
                     dead = True
-                    print("You have slayed killed the beast. You can enter the code now.")
+                    print("You have killed the beast. You can enter the code now.")
                 if not swung:
                     print("You cannot swing that.")
 
@@ -280,7 +289,7 @@ def main():
             else:
                 target_item = command_words[1].lower()
                 if target_item == "3675" and current_room == 6:
-                    if dead == True or fed == True:
+                    if dead or fed:
                         entered = True
                         print(f"You have entered the correct code.")
                 if not entered:
@@ -304,5 +313,6 @@ def main():
             done = True
         else:
             print("I don't understand that command. Try something else.")
+
 
 main()
